@@ -1,0 +1,12 @@
+CHIP zadataka
+{
+IN x, y, z;
+OUT out;
+
+PARTS:
+
+Not(in = x, out = notx);
+Not(in = y, out = noty);
+Or(a = notx, b = noty, out = out);
+
+}

@@ -1,0 +1,23 @@
+CHIP zadatakb
+{
+IN x, y, z;
+OUT out;
+
+PARTS:
+Not(in = y, out = noty);
+Not(in = z, out = notz);
+
+And(a = x, b = noty, out = xandnoty);
+And(a = xandnoty, b = notz, out = out);
+}
+-- ~(~x * y * z) = ~(~x) + ~y + ~z = x + ~y + ~z
+-- ~(x * y * z) = ~x + ~y + ~z
+-- 
+-- (x + ~y + ~z) * (~x + ~y + ~z) * (x * ~y * ~z) =
+-- = (x * ~x + x * ~y + x * ~z + ~x * ~y + ~y * ~y + ~y * ~z + ~x * ~z + ~y * ~z + ~z * ~z) * (x * ~y * ~z) =
+-- = (x * ~y + x * ~z + ~x * ~y + ~y + ~y * ~z + ~x * ~z + ~y * ~z + ~z) * (x * ~y * ~z) = 
+-- = [~y * (x + ~x + 1 + ~z) + ~z * (x + ~x + 1)] * (x * ~y * ~z) =
+-- = (~y * ~z + ~z * 1) * (x * ~y * ~z) =
+-- = [~z * (~y + 1)] * (x * ~y * ~z) =
+-- = ~z * ~y * x * ~y * ~z =
+-- = x * ~y * ~z
